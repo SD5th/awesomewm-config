@@ -1,0 +1,16 @@
+{
+    "Lua.diagnostics.globals": [
+        "awesome",
+        "client", 
+        "root",
+        "screen",
+        "tag",
+        "mouse",
+        "keygrabber",
+    ],
+    "Lua.workspace.library": [
+        "/usr/share/awesome/lib",
+        "/usr/lib/awesome/lib"
+    ],
+    "Lua.workspace.checkThirdParty": false
+}
