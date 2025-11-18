@@ -6,9 +6,12 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 
 local modkey = require("config").modkey
 local terminal = require("config").terminal
+local locker_cmd = require("config").locker_cmd
+
 
 local globalkeys = gears.table.join(
 	awful.key({ modkey }, "s", hotkeys_popup.show_help, { description = "show help", group = "awesome" }),
+	awful.key({ modkey }, "l", function() awful.spawn.with_shell(locker_cmd) end, { description = "lock system", group = "awesome" }),
 	awful.key({ modkey }, "Down", awful.tag.viewprev, { description = "view previous", group = "tag" }),
 	awful.key({ modkey }, "Up", awful.tag.viewnext, { description = "view next", group = "tag" }),
 	awful.key({ modkey }, "Escape", awful.tag.history.restore, { description = "go back", group = "tag" }),

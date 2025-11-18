@@ -15,3 +15,4 @@ require("modules.signals-init")
 
 -- Final initialization
 require("modules.autostart")           
+require("modules.auto-lock-init")
