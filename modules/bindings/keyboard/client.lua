@@ -1,7 +1,7 @@
 local awful = require("awful")
 local gears = require("gears")
 
-
+local modkey = require("config").modkey
 
 return gears.table.join(
 	awful.key({ modkey }, "f", function(c)

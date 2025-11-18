@@ -1,6 +1,8 @@
 local awful = require("awful")
 local gears = require("gears")
 
+local modkey = require("config").modkey
+
 return gears.table.join(
 	awful.button({}, 1, function(c)
 		c:emit_signal("request::activate", "mouse_click", { raise = true })

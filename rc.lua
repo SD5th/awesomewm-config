@@ -4,14 +4,14 @@ pcall(require, "luarocks.loader")
 
 -- Core AwesomeWM functionality
 require("awful.autofocus")
+require("beautiful").init("/home/sultan/.config/awesome/theme.lua")
 
 -- Configuration modules (order matters!)
-require("modules.variables-init")      -- 1. Global variables and settings
-require("modules.error-handling-init") -- 2. Error handling setup
-require("modules.rules.init")          -- 3. Window rules (before bindings)
-require("modules.bindings.init")       -- 4. Key and mouse bindings
-require("modules.screen.init")         -- 5. Screen and UI setup
-require("modules.signals-init")        -- 6. Client and system signals
+require("modules.error-handling-init") 
+require("modules.rules.init")          
+require("modules.bindings.init")       
+require("modules.screen.init")         
+require("modules.signals-init")        
 
 -- Final initialization
-require("modules.autostart")           -- 7. Startup applications
+require("modules.autostart")           

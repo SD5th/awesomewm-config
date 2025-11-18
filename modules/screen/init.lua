@@ -2,6 +2,8 @@ local awful = require("awful")
 local wibox = require("wibox")
 local menubar = require("menubar")
 
+local terminal = require("config").terminal
+
 -- {{{ Menu
 -- Create a launcher widget and a main menu
 local mylauncher = require("modules.screen.my-widgets.launcher").new()

@@ -4,6 +4,8 @@ local menubar = require("menubar")
 
 local hotkeys_popup = require("awful.hotkeys_popup")
 
+local modkey = require("config").modkey
+local terminal = require("config").terminal
 
 local globalkeys = gears.table.join(
 	awful.key({ modkey }, "s", hotkeys_popup.show_help, { description = "show help", group = "awesome" }),
@@ -78,7 +80,7 @@ local globalkeys = gears.table.join(
 	end, { description = "restore minimized", group = "client" }),
 
 	-- Menubar
-	awful.key({ modkey }, "p", function()
+	awful.key({ modkey }, "w", function()
 		menubar.show()
 	end, { description = "show the menubar", group = "launcher" })
 )
