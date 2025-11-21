@@ -1,22 +1,15 @@
 local awful = require("awful")
 local wibox = require("wibox")
+
+
 local menubar = require("menubar")
-
 local terminal = require("config").terminal
+menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 
--- {{{ Menu
--- Create a launcher widget and a main menu
 local mylauncher = require("modules.screen.my-widgets.launcher").new()
 
--- Menubar configuration 
-menubar.utils.terminal = terminal -- Set the terminal for applications that require it
--- }}}
-
--- Keyboard map indicator and switcher
 local mykeyboardlayout = require("modules.screen.my-widgets.keyboardlayout").new()
 
--- {{{ Wibar
--- Create a textclock widget
 local mytextclock = require("modules.screen.my-widgets.textclock").new()
 
 local battery_level_widget = require("modules.screen.my-widgets.battery-level").new()
@@ -49,6 +42,8 @@ awful.screen.connect_for_each_screen(function(s)
 		s.mytasklist, -- Middle widget
 		{ -- Right widgets
 			layout = wibox.layout.fixed.horizontal,
+			spacing = 3,
+			
 			wibox.widget.systray(),
 			mykeyboardlayout,
 			mytextclock,

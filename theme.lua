@@ -8,7 +8,7 @@ local dpi = require("beautiful.xresources").apply_dpi
 
 -- {{{ Main
 local theme = {}
-theme.wallpaper = "/home/sultan/.config/awesome/wallpaper/1.png"
+theme.wallpaper = "/home/sultan/.config/awesome/wallpaper/kotik.jpg"
 -- }}}
 
 -- {{{ Styles

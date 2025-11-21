@@ -6,8 +6,8 @@ local M = {}
 	local tag_names = { "1", "2", "3", "4", "5" }
 	local als = awful.layout.suit
 	awful.layout.layouts = {
-		als.tile,
 		als.max,
+		als.tile,
 		-- als.floating,
 		-- als.tile.left,
 		-- als.tile.bottom,

@@ -5,6 +5,8 @@ local lock_timer = nil
 
 local locker_cmd = require("config").locker_cmd
 
+awful.spawn.with_shell("xset s off && xset -dpms")
+
 local function lock_system()
   awful.spawn(locker_cmd)
   lock_timer = nil

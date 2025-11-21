@@ -1,3 +1,3 @@
 local awful = require("awful")
 
-awful.spawn("nm-applet")
+awful.spawn.easy_async("nm-applet")
