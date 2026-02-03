@@ -7,11 +7,11 @@ require("awful.autofocus")
 require("beautiful").init("/home/sultan/.config/awesome/theme.lua")
 
 -- Configuration modules (order matters!)
-require("modules.error-handling-init") 
-require("modules.rules.init")          
-require("modules.bindings.init")       
-require("modules.screen.init")         
-require("modules.signals-init")        
+require("modules.error-handling-init")
+require("modules.rules.init")
+require("modules.bindings.init")
+require("modules.screen.init")
+require("modules.signals-init")
 
 -- Final initialization
 require("modules.autostart")
