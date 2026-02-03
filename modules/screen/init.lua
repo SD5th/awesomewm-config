@@ -14,6 +14,8 @@ local mytextclock = require("modules.screen.my-widgets.textclock").new()
 
 local battery_level_widget = require("modules.screen.my-widgets.battery-level").new()
 
+local audio_control_widget = require('modules.screen.my-widgets.audio-control.widget').new_widget()
+
 awful.screen.connect_for_each_screen(function(s)
 	-- Wallpaper
   require("modules.screen.wallpaper").set(s)
@@ -46,6 +48,7 @@ awful.screen.connect_for_each_screen(function(s)
 			
 			wibox.widget.systray(),
 			mykeyboardlayout,
+			audio_control_widget,
 			mytextclock,
 			battery_level_widget
 		},

@@ -1,0 +1,148 @@
+local awful = require("awful")
+local wibox = require("wibox")
+local gears = require("gears")
+local beautiful = require("beautiful")
+
+local pactl = require("modules.screen.my-widgets.audio-control.pactl")
+local utils = require("modules.screen.my-widgets.audio-control.utils")
+
+local M = {}
+
+local function build_main_line(device)
+  if device.active_port ~= nil and device.ports[device.active_port] ~= nil then
+    return device.description .. ' · ' .. utils.split(device.ports[device.active_port], " ")[1]
+  else
+    return device.description
+  end
+end
+
+local function build_header_row(text)
+  return wibox.widget{
+    {
+      markup = "<b>" .. text .. "</b>",
+      align = 'center',
+      widget = wibox.widget.textbox
+    },
+    bg = beautiful.bg_normal,
+    widget = wibox.container.background
+  }
+end
+
+local function build_rows(devices, on_checkbox_click, device_type)
+  local device_rows  = { layout = wibox.layout.fixed.vertical }
+  for _, device in pairs(devices) do
+    local checkbox = wibox.widget {
+      checked = device.is_default,
+      color = beautiful.bg_normal,
+      paddings = 2,
+      shape = gears.shape.circle,
+      forced_width = 20,
+      forced_height = 20,
+      check_color = beautiful.fg_normal,
+      widget = wibox.widget.checkbox
+    }
+
+    checkbox:connect_signal("button::press", function()
+      pactl.set_default(device_type, device.name)
+      on_checkbox_click()
+    end)
+
+    local row = wibox.widget {
+      {
+        {
+          {
+            checkbox,
+            valign = 'center',
+            layout = wibox.container.place,
+          },
+          {
+            {
+              text = build_main_line(device),
+              align = 'left',
+              widget = wibox.widget.textbox
+            },
+            left = 10,
+            layout = wibox.container.margin
+          },
+          spacing = 8,
+          layout = wibox.layout.align.horizontal
+        },
+        margins = 4,
+        layout = wibox.container.margin
+      },
+      bg = beautiful.bg_normal,
+      widget = wibox.container.background
+    }
+
+    row:connect_signal("mouse::enter", function(c) c:set_bg(beautiful.bg_focus) end)
+    row:connect_signal("mouse::leave", function(c) c:set_bg(beautiful.bg_normal) end)
+
+    local old_cursor, old_wibox
+    row:connect_signal("mouse::enter", function()
+      local wb = mouse.current_wibox
+        old_cursor, old_wibox = wb.cursor, wb
+        wb.cursor = "hand1"
+    end)
+
+    row:connect_signal("mouse::leave", function()
+      if old_wibox then
+        old_wibox.cursor = old_cursor
+        old_wibox = nil
+      end
+    end)
+
+    row:connect_signal("button::press", function()
+      pactl.set_default(device_type, device.name)
+      on_checkbox_click()
+    end)
+
+    table.insert(device_rows, row)
+  end
+
+  return device_rows
+end
+
+
+
+function M.new_popup()
+  local popup = awful.popup{
+    bg = beautiful.bg_normal,
+    ontop = true,
+    visible = false,
+    shape = gears.shape.rect,
+    border_width = 1,
+    border_color = beautiful.bg_focus,
+    maximum_width = 400,
+    offset = { y = 5 },
+    widget = {}
+  }
+  popup.rows = { layout = wibox.layout.fixed.vertical }
+
+  function popup:rebuild()
+    for i = 0, #self.rows do
+      self.rows[i]=nil
+    end
+
+    local sinks, sources = pactl.get_sinks_and_sources()
+    table.insert(self.rows, build_header_row("SINKS"))
+    table.insert(self.rows, build_rows(sinks, function() self:rebuild() end, "sink"))
+    table.insert(self.rows, build_header_row("SOURCES"))
+    table.insert(self.rows, build_rows(sources, function() self:rebuild() end, "source"))
+
+    self:setup(self.rows)
+  end
+
+  
+  function popup:toggle_visible()
+    self.visible = not self.visible
+
+    if self.visible then
+      popup:rebuild()
+      popup:move_next_to(mouse.current_widget_geometry)
+    end
+  end
+
+  return popup
+end
+
+return M
